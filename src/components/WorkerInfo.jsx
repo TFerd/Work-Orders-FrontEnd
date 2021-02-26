@@ -1,14 +1,18 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getWorker } from "../redux/ducks/worker";
 
 const WorkerInfo = (props) => {
+  // console.log("WorkerInfo started");
+
   const dispatch = useDispatch();
+  const workerInfo = useSelector((state) => state.worker.worker);
 
   const { id } = props;
-  const [workerInfo, setWorkerInfo] = useState();
+  // const [workerInfo, setWorkerInfo] = useState();
+  console.log("WorkerInfo started, id:");
 
   //Fetches data from the workers API based on the ID passed by the props.
   //Sets the results of the call into a state variable that's used to
@@ -19,7 +23,7 @@ const WorkerInfo = (props) => {
     //     const response = res.data.worker;
     //     setWorkerInfo(response);
     // })
-
+    console.log("calling get worker with id of", id);
     dispatch(getWorker(id));
   }, []);
 
@@ -31,7 +35,7 @@ const WorkerInfo = (props) => {
     <div>
       {workerInfo ? (
         <div className="WorkerInfo">
-          <img src={image} />
+          <img alt="worker_picture_here" src={image} />
           <div>
             <h3>{name}</h3>
             <h4>{companyName}</h4>
