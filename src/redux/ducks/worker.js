@@ -3,7 +3,7 @@ export const GET_WORKER = 'GET_WORKER';
 const SET_WORKER = 'SET_WORKER';
 
 export const getWorker = (workerId) => ({
-  type: GET_WORKER
+  type: GET_WORKER,
   payload: workerId
 });
 

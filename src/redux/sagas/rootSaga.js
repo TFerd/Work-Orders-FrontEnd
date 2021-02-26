@@ -5,8 +5,10 @@ import { handleGetWorkOrder } from "./handlers/workOrder";
 import { GET_WORKER } from "../ducks/worker";
 import { GET_WORKORDER } from "../ducks/workOrder";
 
-function* getWorkerSaga() {
-  yield takeLatest(GET_WORKER, handleGetWorker);
+//I dont think the workerId actually does anything here...
+//I mean, look at the yield all in root function, it doesnt put a param
+function* getWorkerSaga(workerId) {
+  yield takeLatest(GET_WORKER, handleGetWorker, workerId);
 }
 
 function* getWorkOrderSaga() {
