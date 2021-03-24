@@ -1,12 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InfoCard from "./InfoCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getWorkOrder } from "../redux/ducks/workOrder";
+import { CircularProgress } from "@material-ui/core";
 
 const WorkOrderList = () => {
   const dispatch = useDispatch();
 
-  const [workOrders, setWorkOrders] = useState();
+  //state.workOrder.workOrder means
+  //1) State
+  //2) state from the configStore (from the reducer)
+  //3) initialstate from the duck
+  const workOrders = useSelector((state) => state.workOrder.workOrder);
+
+  // const [workOrders, setWorkOrders] = useState();
   const [searchTerm, setSearchTerm] = useState(""); //Used for filtering work orders
   const [isSortByLatest, setIsSortByLatest] = useState(true); //Used for sorting work orders
 
@@ -14,6 +22,11 @@ const WorkOrderList = () => {
   useEffect(() => {
     if (!workOrders) {
       // loadWorkOrders(setWorkOrders);
+      dispatch(getWorkOrder());
+
+      //NOW WE GOTTA APPEND THE WORKERS FOR EACH WORKORDER
+
+      console.log("End of useeffect", workOrders);
     }
   }, []);
 
@@ -54,7 +67,7 @@ const WorkOrderList = () => {
           {
             //Filters the work orders based on the input in the search bar
             workOrders
-              .filter((orders) => orders.worker.name.includes(searchTerm))
+              //.filter((orders) => orders.worker.name.includes(searchTerm))
               //Sorts the work orders based on the checkbox
               .sort((x, y) => {
                 return isSortByLatest
@@ -67,7 +80,7 @@ const WorkOrderList = () => {
           }
         </div>
       ) : (
-        <div>Loading...</div>
+        <CircularProgress />
       )}
     </>
   );
